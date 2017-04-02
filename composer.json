@@ -12,8 +12,8 @@
         "php"             : ">=5.3.3",
         "silex/silex"     : "~1.0",
         "twig/twig"       : "~1.10",
-        "bernard/bernard" : "~0.12",
-        "ahtinurme/silex"   : ">=0.5.0,<0.6.0"
+        "bernard/bernard" : ">0.12",
+        "ahtinurme/silex"   : ">=0.5.0"
     },
 
     "extra" : {
