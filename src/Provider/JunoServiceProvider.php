@@ -2,24 +2,26 @@
 
 namespace Juno\Provider;
 
+use Pimple\Container;
+use Pimple\ServiceProviderInterface;
+use Silex\Api\BootableProviderInterface;
+use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
-use Silex\ServiceProviderInterface;
-use Silex\ControllerProviderInterface;
 
-class JunoServiceProvider implements ServiceProviderInterface, ControllerProviderInterface
+class JunoServiceProvider implements ServiceProviderInterface, ControllerProviderInterface, BootableProviderInterface
 {
-    public function register(Application $app)
+    public function register(Container $app)
     {
         $app['juno.mount_prefix'] = '/';
         $app['juno.base_url'] = function ($app) {
             return $app['juno.mount_prefix'];
         };
 
-        $app['twig.loader.filesystem'] = $app->share($app->extend('twig.loader.filesystem', function ($loader) {
+        $app->extend('twig.loader.filesystem', function (\Twig_Loader_Filesystem $loader) {
             $loader->addPath(__DIR__ . '/../Resources/views', 'Juno');
 
             return $loader;
-        }));
+        });
     }
 
     public function boot(Application $app)
