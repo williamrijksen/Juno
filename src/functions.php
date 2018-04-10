@@ -2,7 +2,7 @@
 
 namespace Juno;
 
-use Bernard\Silex\BernardServiceProvider;
+use Juno\Provider\BernardServiceProvider;
 use Juno\Provider\JunoServiceProvider;
 use Silex\Application;
 use Silex\Provider\TwigServiceProvider;

@@ -9,19 +9,12 @@
     },
 
     "require" : {
-        "php"             : ">=5.3.3",
+        "php"             : ">=7.0.0",
         "silex/silex"     : "^2.0",
         "twig/twig"       : "*",
         "bernard/bernard" : "*",
-        "bernard/pimple"  : "~0.6.0@dev"
+        "pimple/pimple"  : "*"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/bangpound/bernard-service-provider"
-        }
-    ],
-
     "extra" : {
         "resoures" : {
             "export" : { "juno" : "src/Resources/views" }
