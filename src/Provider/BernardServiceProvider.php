@@ -83,7 +83,7 @@ class BernardServiceProvider implements ServiceProviderInterface
     protected function registerSerializers(Container $app)
     {
         $app['bernard.serializer_simple'] = function () {
-            return new Serializer\SimpleSerializer();
+            return new Serializer();
         };
 
         $app['bernard.serializer_symfony'] = function ($app) {

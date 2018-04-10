@@ -19,7 +19,10 @@ class EnvelopeIterator implements \Iterator
             'timestamp' => $envelope->getTimestamp(),
             'class'     => $envelope->getClass(),
             'name'      => $envelope->getName(),
-            'arguments' => get_object_vars($envelope->getMessage()),
+            'arguments' => [
+                'name' => $envelope->getMessage()->getName(),
+                'arguments' => $envelope->getMessage()->all()
+            ],
         );
     }
 
