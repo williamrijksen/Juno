@@ -12,7 +12,7 @@
         "php"             : ">=7.0.0",
         "silex/silex"     : "^2.0",
         "twig/twig"       : "*",
-        "bernard/bernard" : "*",
+        "bernard/bernard" : "v1.0.0-alpha7",
         "pimple/pimple"  : "*"
     },
     "extra" : {
