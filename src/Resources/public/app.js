@@ -17,6 +17,10 @@ var Juno = null;
         return $resource('info.json', {}, {});
     }]);
 
+    Juno.factory('Retry', ['$resource', function ($resource) {
+        return $resource('retry/:hash.json', {}, {});
+    }]);
+
     Juno.controller('DefaultController', ['$rootScope', '$route', function ($rootScope, $route) {
         $rootScope.isCollapsed = false;
         $rootScope.route = $route;
@@ -30,7 +34,7 @@ var Juno = null;
         $scope.queues = Queue.query();
     }]);
 
-    Juno.controller('QueueController', ['$scope', '$routeParams', 'Queue', function ($scope, $routeParams, Queue) {
+    Juno.controller('QueueController', ['$scope', '$routeParams', 'Queue', 'Retry', function ($scope, $routeParams, Queue, Retry) {
         $scope.page  = parseInt($routeParams.page) || 1;
         $scope.pages = 1;
         $scope.queue = {
@@ -46,8 +50,7 @@ var Juno = null;
         $scope.delete = function () {
             Queue.delete({ queue : $routeParams.queue });
         };
-
-    }])
+    }]);
 
     Juno.controller('FailedController', ['$controller', '$scope', '$routeParams', 'Queue', function ($controller, $scope, $routeParams, Queue) {
         $routeParams.queue = 'failed';
@@ -56,6 +59,12 @@ var Juno = null;
             $routeParams: $routeParams, 
             Queue: Queue
         });
+
+        $scope.retry = function (hash) {
+            Retry.get({
+                hash: hash
+            });
+        };
     }]);
 
     Juno.controller('ConsumersController', ['$scope', 'Consumer', function ($scope, Consumer) {

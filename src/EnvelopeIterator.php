@@ -23,6 +23,7 @@ class EnvelopeIterator implements \Iterator
                 'name' => $envelope->getMessage()->getName(),
                 'arguments' => $envelope->getMessage()->all()
             ],
+            'hash' => sha1($envelope)
         );
     }
 

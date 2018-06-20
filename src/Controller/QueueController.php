@@ -2,6 +2,10 @@
 
 namespace Juno\Controller;
 
+use Bernard\Driver\PhpRedisDriver;
+use Bernard\Envelope;
+use Bernard\Producer;
+use Bernard\QueueFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;
 use Juno\EnvelopeIterator;
@@ -35,9 +39,32 @@ class QueueController
         ));
     }
 
+    public function retryAction(Application $app, Request $request)
+    {
+        /** @var Producer $producer*/
+        $producer = $app['bernard.producer'];
+        $offset = $request->query->get('offset', 1);
+        $limit  = $request->query->get('limit', 50);
+
+        /** @var QueueFactory $queueFactory */
+        $queueFactory = $app['bernard.queue_factory'];
+        $queue = $queueFactory->create('failed');
+
+        /** @var Envelope $envelope */
+        foreach ($queue->peek($offset, $limit) as $envelope) {
+            $producer->produce(
+                $envelope->getMessage(), $queue
+            );
+        }
+
+        return $app->json(array(), 204);
+    }
+
     public function deleteAction(Application $app, $queue)
     {
-        $app['bernard.driver']->removeQueue($queue);
+        /** @var PhpRedisDriver $driver */
+        $driver = $app['bernard.driver'];
+        $driver->removeQueue($queue);
 
         return $app->json(array(), 204);
     }

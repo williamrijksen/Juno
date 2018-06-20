@@ -21,6 +21,7 @@
                         <th>Timestamp</th>
                         <th>Name</th>
                         <th>Arguments</th>
+                        <th></th>
                     </tr>
                 </thead>
 
@@ -30,10 +31,16 @@
                         <td><abbr title="{{ message.class }}">{{ message.name }}</abbr></td>
                         <td ng-if="message.arguments"><code>{{ message.arguments | json }}</code></td>
                         <td ng-if="message.arguments | empty"><code>~</code></td>
+                        <td ng-if="queue.name == 'failed'">
+                            <a href="#" class="btn btn-xs btn-danger" ng-click="retry(message.hash)">Retry</a>
+                        </td>
+                        <td ng-if="queue.name != 'failed'">
+                            ~
+                        </td>
                     </tr>
 
                     <tr ng-if="queue.messages | empty">
-                        <td colspan="3">No messages in this queue...</td>
+                        <td colspan="4">No messages in this queue...</td>
                     </tr>
                 </tbody>
             </table>
